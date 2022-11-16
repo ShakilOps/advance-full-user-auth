@@ -1,7 +1,7 @@
 import sgMail from "@sendgrid/mail";
-import { HOST_EMAIL, SENDGRID_API } from "../constants";
+import { EMAIL_API, HOST_EMAIL } from "../constants";
 
-sgMail.setApiKey(SENDGRID_API);
+sgMail.setApiKey(EMAIL_API);
 
 const sendMail = async (email, subject, text, html) => {
   try {
