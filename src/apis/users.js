@@ -1,10 +1,11 @@
-import { randomBytes } from "crypto";
-import { Router } from "express";
 import { join } from "path";
+import { User } from "../models";
+import { Router } from "express";
+import { randomBytes } from "crypto";
 import { DOMAIN } from "../constants";
 import sendMail from "../functions/email-sender";
+import { userAuth } from "../middlewares/auth-guard";
 import Validator from "../middlewares/validator-middleware";
-import { User } from "../models";
 import { AuthenticateValidations, RegisterValidations } from "../validators";
 
 const router = Router();
@@ -104,7 +105,7 @@ const router = Router();
 
   
   /**
- * @description To aiuthenticate an user and get auth token
+ * @description To authenticate an user and get auth token
  * @api /users/api/authenticate
  * @access PUBLIC
  * @type POST
@@ -144,6 +145,43 @@ const router = Router();
       }
     }
   );
+
+
+/**
+ * @description To get the authenticated user's profile
+ * @api /users/api/authenticate
+ * @access Private
+ * @type GET
+ */
+router.get("/api/authenticate", userAuth, async (req, res) => {
+  return res.status(200).json({
+    user: req.user,
+  });
+});
+
+
+/**
+ * @description To initiate the password reset process
+ * @api /users/api/reset-password
+ * @access Public
+ * @type POST
+ */
+
+
+/**
+ * @description To resender reset password page
+ * @api /users/reset-password/:resetPasswordToken
+ * @access Restricted via email
+ * @type GET
+ */
+
+
+/**
+ * @description To reset the password
+ * @api /users/api/reset-password-now
+ * @access Restricted via email
+ * @type POST
+ */
   
 
 export default router;
